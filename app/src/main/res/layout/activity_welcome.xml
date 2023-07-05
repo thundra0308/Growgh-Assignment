@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".activities.WelcomeActivity">
+
+    <ImageView
+        android:layout_width="220dp"
+        android:layout_height="220dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_welcomeimg"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/noto_sans"
+        android:text="Welcome Ayush"
+        android:textColor="#1E1E1E"
+        android:textSize="32sp"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/welcome_btn_feeds"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="35dp"
+        android:background="@drawable/button_gradient_background"
+        android:backgroundTint="@null"
+        android:fontFamily="@font/poppins_medium"
+        android:text="Feeds"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:elevation="0dp"
+        app:elevation="0dp"
+        app:rippleColor="@color/white"
+        app:backgroundTint="@null"
+        app:backgroundTintMode="src_atop"
+        app:cornerRadius="5dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/welcome_btn_uploadimage"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        app:cornerRadius="5dp"
+        android:text="Upload Image"
+        app:rippleColor="@color/white"
+        android:textSize="15sp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:elevation="0dp"
+        app:elevation="0dp"
+        android:textColor="@color/white"
+        android:layout_marginStart="35dp"
+        android:layout_marginEnd="35dp"
+        android:fontFamily="@font/poppins_medium"
+        android:textStyle="bold"
+        android:backgroundTint="@null"
+        app:backgroundTint="@null"
+        app:backgroundTintMode="src_atop"
+        android:background="@drawable/button_gradient_background"/>
+
+
+</LinearLayout>
