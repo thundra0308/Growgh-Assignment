@@ -33,11 +33,9 @@ object Constants {
     fun isLocationEnabled(context: Context): Boolean {
         val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
-        // Check if GPS or network location providers are enabled
         val isGpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
         val isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
 
-        // Check if location settings are satisfied using LocationSettingsRequest
         val locationRequest = LocationRequest.create().apply {
             priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         }
@@ -45,18 +43,14 @@ object Constants {
         val client = LocationServices.getSettingsClient(context)
         val task: Task<LocationSettingsResponse> = client.checkLocationSettings(builder.build())
 
-        // Handle the result of the location settings check
         task.addOnCompleteListener {
             try {
                 val response = it.getResult(ApiException::class.java)
-                // All location settings are satisfied
             } catch (exception: ApiException) {
                 when (exception.statusCode) {
                     LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> {
-                        // Location settings are not satisfied, but this can be fixed by showing the user a dialog
                     }
                     LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE -> {
-                        // Location settings are not satisfied, and the location services cannot be improved
                     }
                 }
             }

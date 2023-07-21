@@ -13,8 +13,8 @@ import com.example.assignmentgrowigh.adapters.NewsFeedAdapter
 class SwipeItemTouchHelper(private val onSwipeListener: OnSwipeListener) :
     ItemTouchHelper.Callback() {
 
-    private val swipeThreshold = 0.1f // Adjust this value to set the swipe distance threshold
-    private val iconMargin = 20 // Adjust this value to set the icon margin from the item edge
+    private val swipeThreshold = 0.1f
+    private val iconMargin = 20
 
     interface OnSwipeListener {
         fun onItemSwiped(position: Int)
@@ -56,20 +56,16 @@ class SwipeItemTouchHelper(private val onSwipeListener: OnSwipeListener) :
         val iconWidth = icon?.intrinsicWidth ?: 0
 
         if (dX > 0) {
-            // Swipe right
             val alpha = 0 / recyclerView.width.toFloat()
             itemView.alpha = 1.toFloat() // Apply transparency to the swiped item
 
-            // Calculate the maximum swipe distance for the item
             val maxDx = recyclerView.width * swipeThreshold
 
-            // Limit the maximum swipe distance
             val finalDx = if (dX <= maxDx) dX else maxDx
 
-            // Move the item to the right
             viewHolder.itemView.translationX = finalDx
 
-            paint.color = Color.parseColor("#3478A9") // Set your desired background color
+            paint.color = Color.parseColor("#3478A9")
             val background = RectF(
                 itemView.left.toFloat(),
                 itemView.top.toFloat(),
@@ -80,9 +76,9 @@ class SwipeItemTouchHelper(private val onSwipeListener: OnSwipeListener) :
 
             if (icon != null) {
                 val iconTop = itemView.top + (itemView.height - iconHeight) / 2
-                val iconMargin = 30 // Adjust this value to set the icon margin from the item edge
-                val iconLeft = itemView.left + iconMargin // Update the iconLeft value here
-                val iconRight = iconLeft + iconWidth // Update the iconRight value here
+                val iconMargin = 30
+                val iconLeft = itemView.left + iconMargin
+                val iconRight = iconLeft + iconWidth
                 val iconBottom = iconTop + iconHeight
 
                 icon.setBounds(iconLeft, iconTop, iconRight, iconBottom)
@@ -94,7 +90,6 @@ class SwipeItemTouchHelper(private val onSwipeListener: OnSwipeListener) :
             }
             super.onChildDraw(c, recyclerView, viewHolder, newDx, dY, actionState, isCurrentlyActive)
         } else {
-            // Swipe left or no swipe
             super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
         }
     }
@@ -103,7 +98,6 @@ class SwipeItemTouchHelper(private val onSwipeListener: OnSwipeListener) :
         recyclerView: RecyclerView,
         viewHolder: RecyclerView.ViewHolder
     ) {
-        // Reset the alpha and translationX of the swiped item when the touch is released
         viewHolder.itemView.alpha = 1.0f
         viewHolder.itemView.translationX = 0f
     }
