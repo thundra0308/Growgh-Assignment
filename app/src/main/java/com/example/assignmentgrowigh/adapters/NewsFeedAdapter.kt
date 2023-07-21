@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -17,6 +18,23 @@ class NewsFeedAdapter(private val context: Context, private val newsList: List<R
             val image = itemView.findViewById<ImageView>(R.id.feedrv_iv_image)
             val title = itemView.findViewById<TextView>(R.id.feedrv_tv_title)
             val author = itemView.findViewById<TextView>(R.id.feedrv_tv_author)
+            val zoomInAnim = AnimationUtils.loadAnimation(context,R.anim.zoom_in)
+            val likeIcon = itemView.findViewById<ImageView>(R.id.feedrv_iv_likeicon)
+            val likeCount = itemView.findViewById<TextView>(R.id.feedrv_tv_likecount)
+            likeIcon.setOnClickListener {
+                if(news.isLiked) {
+                    news.likeCount = news.likeCount - 1
+                    likeCount.text = news.likeCount.toString()
+                    news.isLiked = false
+                    likeIcon.setImageResource(R.drawable.ic_like1)
+                } else {
+                    news.likeCount = news.likeCount + 1
+                    likeCount.text = news.likeCount.toString()
+                    news.isLiked = true
+                    likeIcon.setImageResource(R.drawable.ic_likered)
+                }
+                likeIcon.startAnimation(zoomInAnim)
+            }
             Glide
                 .with(context)
                 .load(news.urlToImage)

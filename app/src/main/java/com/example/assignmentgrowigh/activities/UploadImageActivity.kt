@@ -3,6 +3,7 @@ package com.example.assignmentgrowigh.activities
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.Toast
@@ -44,25 +45,53 @@ class UploadImageActivity : AppCompatActivity() {
     }
 
     private fun selectImage() {
-        Dexter.withContext(this)
-            .withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
-            .withListener(object : PermissionListener {
-                override fun onPermissionGranted(response: PermissionGrantedResponse?) {
-                    openGallery()
-                }
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.TIRAMISU) {
+            Dexter.withContext(this)
+                .withPermission(Manifest.permission.READ_MEDIA_IMAGES)
+                .withListener(object : PermissionListener {
+                    override fun onPermissionGranted(response: PermissionGrantedResponse?) {
+                        openGallery()
+                    }
 
-                override fun onPermissionDenied(response: PermissionDeniedResponse?) {
-                    // Permission denied, show an error message or handle it accordingly
-                    Toast.makeText(this@UploadImageActivity, "Permission denied", Toast.LENGTH_SHORT).show()
-                }
+                    override fun onPermissionDenied(response: PermissionDeniedResponse?) {
+                        Toast.makeText(
+                            this@UploadImageActivity,
+                            "Permission denied",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
 
-                override fun onPermissionRationaleShouldBeShown(
-                    permission: PermissionRequest?,
-                    token: PermissionToken?
-                ) {
-                    token?.continuePermissionRequest()
-                }
-            }).check()
+                    override fun onPermissionRationaleShouldBeShown(
+                        permission: PermissionRequest?,
+                        token: PermissionToken?
+                    ) {
+                        token?.continuePermissionRequest()
+                    }
+                }).check()
+        } else {
+            Dexter.withContext(this)
+                .withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                .withListener(object : PermissionListener {
+                    override fun onPermissionGranted(response: PermissionGrantedResponse?) {
+                        openGallery()
+                    }
+
+                    override fun onPermissionDenied(response: PermissionDeniedResponse?) {
+                        Toast.makeText(
+                            this@UploadImageActivity,
+                            "Permission denied",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+
+                    override fun onPermissionRationaleShouldBeShown(
+                        permission: PermissionRequest?,
+                        token: PermissionToken?
+                    ) {
+                        token?.continuePermissionRequest()
+                    }
+                }).check()
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -80,7 +109,7 @@ class UploadImageActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val REQUEST_CODE_IMAGE_GALLERY: Int = 100
+        const val REQUEST_CODE_IMAGE_GALLERY: Int = 2
     }
 
 }

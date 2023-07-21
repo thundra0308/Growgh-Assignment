@@ -10,5 +10,7 @@ data class ResultModel(
     @SerializedName("url")
     val url: String?,
     @SerializedName("urlToImage")
-    val urlToImage: String?
+    val urlToImage: String?,
+    var likeCount: Long = 0,
+    var isLiked: Boolean = false
 )
